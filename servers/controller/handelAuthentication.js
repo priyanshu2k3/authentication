@@ -26,39 +26,32 @@ async function handelUserSignUp(req,res){
 
 
 async function handelUserLogin(req,res){
-    const {email,password}=req.body;
-    if(email==="" && password===""){return res.status("all data must be filled ");}
+      const {email,password}=req.body;
 
-
-    else{
       const user =await User.findOne({"email":email,"hash":password})
+      console.log("server serching for user anf got this",user)
+
       if(!user){return(res.status(404).send("Invalid email or password or you are not registered "))}
       else {
-      const sessionId=uuidv4();
-      setUser(sessionId,user)
-      console.log("found",sessionId)
+        console.log("else part in the handel authentication")
+      //const sessionId=uuidv4();
+       const token=setUser(req.body)
+      // console.log("token generated",token)
 
-      // res.cookie("uid",sessionId)
-
-      // res.cookie("cookieSessionId",sessionId,{
-      //  // maxAge:36000, // Cookie expiration time (in milliseconds)
-      //   // httpOnly: false, // Restrict cookie access to HTTP requests only
-      //   // secure: false, // Serve cookie over HTTPS only
-      //   // sameSite: 'strict' // Restrict cookie to same-site requests only
-      // });
-      // console.log("logged in",user,"cookie",sessionId)
-      //console.log("all cookies",res.cookie("uid"))
+       res.cookie("token",token,{
+        secure: false, // Serve cookie over HTTPS only
+        maxAge:36000, // Cookie expiration time (in milliseconds)
+      httpOnly: false, // Restrict cookie access to HTTP requests only
       
-      return (res.status(200).cookie("cookieSessionId",sessionId).send(user))}  
-      // res.status(200).redirect("/home")}
+      sameSite: 'strict' // Restrict cookie to same-site requests only
+        });
+
+      return (res.status(200).send({"user":user,"token":token}))}  
         }
 
     
       
 
-    
-}
 
-
-module.exports= {handelUserSignUp,handelUserLogin};
+module.exports= {handelUserSignUp,handelUserLogin,};
 

@@ -1,11 +1,20 @@
-const sessionIdToUserMap =new Map();
+const jwt=require("jsonwebtoken")
 
-function setUser(id,user){
-    sessionIdToUserMap.set(id,user)
+
+const secret ="ppg#@!98765"
+
+
+function setUser(user){
+    console.log(user,"inside setuser,getusr")
+
+    console.log(jwt.sign(user,secret,{}))
+ return (jwt.sign(user,secret))
 }
 
-function getUser(id,user){
-    return(sessionIdToUserMap.get(id))
+function verifyUser(token){
+    if(!token){return (null)}
+
+    return(jwt.verify(token,secret));
 }
 
-module.exports={setUser,getUser}
+module.exports={setUser,verifyUser}

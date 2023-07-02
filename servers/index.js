@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require ("mongoose")
 const cors = require('cors');
+const cookieParser=require('cookie-parser')
 // const router = express.Router()
 const app = express();
-const User=require("./models/signup")
 
 
 const signUpRouter=require("./routes/signup")
@@ -11,16 +11,19 @@ const signUpRouter=require("./routes/signup")
 
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/blooddonor")
+//mogodb connecting
+mongoose.connect("mongodb://127.0.0.1:27017/bloodDonation")
 .then(()=>{console.log("db is connected")})
 .catch((e)=>console.log("error",e))
 
 
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
-app.use(cors());
+app.use(cors(withCredentials = true));
+app.use(cookieParser())
 
-app.use("/",signUpRouter)
+app.use("/",signUpRouter) 
+
 
 
 
