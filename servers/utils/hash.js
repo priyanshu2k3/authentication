@@ -1,4 +1,3 @@
-// import { createHash } from "crypto"
 import { SHA256 } from 'crypto-js';
 
 function hashPassword(password){
@@ -8,14 +7,10 @@ function hashPassword(password){
     const hash = createHmac('sha256', secret)
                    .update('I love cupcakes')
                    .digest('hex');
-    console.log(hash);
+    console.log(hash,"inside hash in servers");
 
 
 return(hash)
 
 }
-
-
-
-
-export default{hashPassword}
+module.exports={hashPassword}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import hashPassword from "../api/hash"
 
 
 function SignUp(props) {
@@ -19,8 +18,6 @@ function SignUp(props) {
     function handelsignup(e){
       var data
         e.preventDefault()
-
-        hashPassword(Password)
 
 
         if(ConfirmPassword===Password){console.log(Email,Password,Name)

@@ -1,6 +1,7 @@
 const User=require("../models/signup")
 const { v4: uuidv4 } = require('uuid');
 const{setUser,getUser}=require("../utils/authSession")
+const {hashPassword}=require("../utils/hash.js")
 
 async function handelUserSignUp(req,res){
     const data=req.body;
@@ -26,8 +27,9 @@ async function handelUserSignUp(req,res){
 
 
 async function handelUserLogin(req,res){
-      const {email,password}=req.body;
 
+      var {email,password}=req.body;
+       password=hashPassword(password)
       const user =await User.findOne({"email":email,"hash":password})
       console.log("server serching for user anf got this",user)
 
